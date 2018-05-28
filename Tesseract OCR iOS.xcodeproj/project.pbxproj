@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		57C5082220BCAB32001E57F9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 57C5082120BCAB32001E57F9 /* libz.tbd */; };
 		58D7B1321C0C945E006BE575 /* G8HierarchicalRecognizedBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 58D7B1301C0C945E006BE575 /* G8HierarchicalRecognizedBlock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		58D7B1331C0C945E006BE575 /* G8HierarchicalRecognizedBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D7B1311C0C945E006BE575 /* G8HierarchicalRecognizedBlock.m */; };
 		73C0A7961A5932C400D823D4 /* G8Tesseract.h in Headers */ = {isa = PBXBuildFile; fileRef = 64A029D617307CD0002B12E7 /* G8Tesseract.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -106,6 +107,7 @@
 		41A95DED1A3AFBF30085093C /* G8RecognitionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = G8RecognitionOperation.m; sourceTree = "<group>"; };
 		41B41A4F1A42ED7600D46246 /* G8RecognizedBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = G8RecognizedBlock.h; sourceTree = "<group>"; };
 		41B41A501A42ED7600D46246 /* G8RecognizedBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = G8RecognizedBlock.m; sourceTree = "<group>"; };
+		57C5082120BCAB32001E57F9 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		58D7B1301C0C945E006BE575 /* G8HierarchicalRecognizedBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = G8HierarchicalRecognizedBlock.h; sourceTree = "<group>"; };
 		58D7B1311C0C945E006BE575 /* G8HierarchicalRecognizedBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = G8HierarchicalRecognizedBlock.m; sourceTree = "<group>"; };
 		645C864A18698EBA00B27B19 /* README_howto_compile_libaries.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README_howto_compile_libaries.md; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57C5082220BCAB32001E57F9 /* libz.tbd in Frameworks */,
 				84803A231B87921B00577EA2 /* liblept.a in Frameworks */,
 				84EA08BA1B8DDF6E00AD3FFC /* libtesseract.a in Frameworks */,
 				84803A221B87921B00577EA2 /* libjpeg.a in Frameworks */,
@@ -373,6 +376,7 @@
 		64F74CCB172FD75F0068E657 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				57C5082120BCAB32001E57F9 /* libz.tbd */,
 				73C0A7BA1A5955E200D823D4 /* TesseractOCR.framework */,
 				64907492198A6B9E00D728CC /* CoreImage.framework */,
 				64F74D77172FD8E90068E657 /* UIKit.framework */,
@@ -646,7 +650,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -671,7 +675,6 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -696,7 +699,6 @@
 					"$(PROJECT_DIR)/TesseractOCR/lib",
 					"$(PROJECT_DIR)/TesseractOCR/libtiff-ios/dependencies/lib",
 				);
-				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.g8production.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -717,7 +719,6 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -739,7 +740,6 @@
 					"$(PROJECT_DIR)/TesseractOCR/lib",
 					"$(PROJECT_DIR)/TesseractOCR/libtiff-ios/dependencies/lib",
 				);
-				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.g8production.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -797,7 +797,6 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -822,7 +821,6 @@
 					"$(PROJECT_DIR)/TesseractOCR/lib",
 					"$(PROJECT_DIR)/TesseractOCR/libtiff-ios/dependencies/lib",
 				);
-				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.g8production.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
