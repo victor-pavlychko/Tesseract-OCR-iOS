@@ -27,7 +27,10 @@
 #ifndef  LEPTONICA_BMP_H
 #define  LEPTONICA_BMP_H
 
-/*
+/*!
+ * \file bmp.h
+ *
+ * <pre>
  * This file is here to describe the fields in the header of
  * the BMP file.  These fields are not used directly in Leptonica.
  * The only thing we use are the sizes of these two headers.
@@ -36,50 +39,86 @@
  * to protect anyone who may also need to use the original definitions.
  * Thanks to J. D. Bryan for pointing out the potential problems when
  * developing on Win32 compatible systems.
+ * </pre>
  */
 
 /*-------------------------------------------------------------*
  *                       BMP file header                       *
  *-------------------------------------------------------------*/
+
+/*! BMP file header
+ *
+ * Notes:
+ *  (1) The bfSize field is stored as a 32 bit integer and includes
+ *      the size of the BMP_FileHeader, BMP_InfoHeader, the color
+ *      table (if any), and the size of the DIB bits.
+ *  (2) The bfOffBits field is also stored as a 32 bit integer and
+ *      contains the absolute offset in bytes of the image data
+ *      in this file. Some bmp files have additional data after the
+ *      BMP_InfoHeader and before the color table (if it exists).
+ *      However, enabling reading of these files makes the reader
+ *      vulnerable to various malware attacks.  Therefore we do not
+ *      read bmp files with extra data, and require that the size
+ *      of the color table in bytes is
+ *         offset - sizeof(BMP_FileHeader) - sizeof(BMP_InfoHeader)
+ *  (3) Use arrays of l_uint8[] to make an endianness agnostic
+ *      access to the BMP_FileHeader easier.
+ */
 struct BMP_FileHeader
 {
-    l_int16        bfType;                /* file type; must be "BM" */
-    l_int16        bfSize;                /* length of the file;
-                                   sizeof(BMP_FileHeader) +
-                                   sizeof(BMP_InfoHeader) +
-                                   size of color table +
-                                   size of DIB bits */
-    l_int16        bfFill1;        /* remainder of the bfSize field */
-    l_int16        bfReserved1;        /* don't care (set to 0)*/
-    l_int16        bfReserved2;        /* don't care (set to 0)*/
-    l_int16        bfOffBits;        /* offset from beginning of file */
-    l_int16        bfFill2;        /* remainder of the bfOffBits field */
+    l_uint8        bfType[2];      /*!< file type; must be "BM"            */
+    l_uint8        bfSize[4];      /*!< length of the file;
+                                       sizeof(BMP_FileHeader) +
+                                       sizeof(BMP_InfoHeader) +
+                                       size of optional extra data +
+                                       size of color table +
+                                       size of DIB bits                    */
+    l_uint8        bfReserved1[2]; /*!< don't care (set to 0)              */
+    l_uint8        bfReserved2[2]; /*!< don't care (set to 0)              */
+    l_uint8        bfOffBits[4];   /*!< offset from beginning of file      */
 };
 typedef struct BMP_FileHeader  BMP_FH;
 
+/*! Number of bytes in a BMP file header */
 #define BMP_FHBYTES  sizeof(BMP_FH)
 
 
 /*-------------------------------------------------------------*
  *                       BMP info header                       *
  *-------------------------------------------------------------*/
+
+/*! BMP info header */
 struct BMP_InfoHeader
 {
-    l_int32        biSize;                  /* size of the BMP_InfoHeader struct */
-    l_int32        biWidth;         /* bitmap width in pixels */
-    l_int32        biHeight;         /* bitmap height in pixels */
-    l_int16        biPlanes;         /* number of bitmap planes */
-    l_int16        biBitCount;         /* number of bits per pixel */
-    l_int32        biCompression;         /* compression format (0 == uncompressed) */
-    l_int32        biSizeImage;         /* size of image in bytes */
-    l_int32        biXPelsPerMeter; /* pixels per meter in x direction */
-    l_int32        biYPelsPerMeter; /* pixels per meter in y direction */
-    l_int32        biClrUsed;          /* number of colors used */
-    l_int32        biClrImportant;         /* number of important colors used */
+    l_int32        biSize;          /*!< size of the BMP_InfoHeader struct   */
+    l_int32        biWidth;         /*!< bitmap width in pixels              */
+    l_int32        biHeight;        /*!< bitmap height in pixels             */
+    l_int16        biPlanes;        /*!< number of bitmap planes             */
+    l_int16        biBitCount;      /*!< number of bits per pixel            */
+    l_int32        biCompression;   /*!< compress format (0 == uncompressed) */
+    l_int32        biSizeImage;     /*!< size of image in bytes              */
+    l_int32        biXPelsPerMeter; /*!< pixels per meter in x direction     */
+    l_int32        biYPelsPerMeter; /*!< pixels per meter in y direction     */
+    l_int32        biClrUsed;       /*!< number of colors used               */
+    l_int32        biClrImportant;  /*!< number of important colors used     */
 };
 typedef struct BMP_InfoHeader  BMP_IH;
 
+/*! Number of bytes in a BMP info header */
 #define BMP_IHBYTES  sizeof(BMP_IH)
 
- 
+
+/*-------------------------------------------------------------*
+ *           Align BMP headers on 4 byte boundaries            *
+ *-------------------------------------------------------------*/
+
+/*! BMP_IH is misaligned, causing crashes on some big-endians.
+ *  A packed struct forces alignment. */
+#if defined(__GNUC__)
+typedef struct __attribute__((__packed__)) {
+  BMP_FH bmpfh;
+  BMP_IH bmpih;
+} BMP_HEADER;
+#endif
+
 #endif  /* LEPTONICA_BMP_H */
