@@ -1,10 +1,8 @@
 ///////////////////////////////////////////////////////////////////////
-// File:        apitypes.h
-// Description: Types used in both the API and internally
-// Author:      Ray Smith
-// Created:     Wed Mar 03 09:22:53 PST 2010
+// File:        version.h
+// Description: Version information
 //
-// (C) Copyright 2010, Google Inc.
+// (C) Copyright 2018, Google Inc.
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -17,17 +15,16 @@
 //
 ///////////////////////////////////////////////////////////////////////
 
-#ifndef TESSERACT_API_APITYPES_H_
-#define TESSERACT_API_APITYPES_H_
+#ifndef TESSERACT_API_VERSION_H_
+#define TESSERACT_API_VERSION_H_
 
-#include "publictypes.h"
+#define TESSERACT_MAJOR_VERSION 4
+#define TESSERACT_MINOR_VERSION 0
+#define TESSERACT_MICRO_VERSION 0
+#define TESSERACT_VERSION \
+  (TESSERACT_MAJOR_VERSION << 16 | \
+   TESSERACT_MINOR_VERSION << 8 | \
+   TESSERACT_MICRO_VERSION)
+#define TESSERACT_VERSION_STR "4.0.0"
 
-// The types used by the API and Page/ResultIterator can be found in:
-//   ccstruct/publictypes.h
-//   ccmain/resultiterator.h
-//   ccmain/pageiterator.h
-// API interfaces and API users should be sure to include this file, rather
-// than the lower-level one, and lower-level code should be sure to include
-// only the lower-level file.
-
-#endif  // TESSERACT_API_APITYPES_H_
+#endif  // TESSERACT_API_VERSION_H_
