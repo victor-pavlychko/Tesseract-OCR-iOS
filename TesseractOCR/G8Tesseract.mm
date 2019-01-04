@@ -865,52 +865,52 @@ namespace tesseract {
     return nil;
 }
 
-- (NSData *)recognizedPDFForImages:(NSArray*)images {
-  
-    if (!self.isEngineConfigured) {
-        return nil;
-    }
-    
-    NSString *path = [self.absoluteDataPath stringByAppendingPathComponent:@"tessdata"];
-    tesseract::TessPDFRenderer *renderer = new tesseract::TessPDFRenderer(path.fileSystemRepresentation);
-    
-    // Begin producing output
-    const char* kUnknownTitle = "Unknown Title";
-    if (renderer && !renderer->BeginDocument(kUnknownTitle)) {
-        return nil; // LCOV_EXCL_LINE
-    }
-    
-    bool result = YES;
-    for (int page = 0; page < images.count && result; page++) {
-        UIImage *image = images[page];
-        if ([image isKindOfClass:[UIImage class]]) {
-            Pix *pixs = [self pixForImage:image];
-            Pix *pix = pixConvertTo1(pixs, UINT8_MAX / 2);
-            pixDestroy(&pixs);
-            
-            const char *pagename = [NSString stringWithFormat:@"page #%i", page].UTF8String;
-            result = _tesseract->ProcessPage(pix, page, pagename, NULL, 0, renderer);
-            pixDestroy(&pix);
-        }
-    }
-    
-    //  error
-    if (!result) {
-        return nil; // LCOV_EXCL_LINE
-    }
-    
-    // Finish producing output
-    if (renderer && !renderer->EndDocument()) {
-        return nil; // LCOV_EXCL_LINE
-    }
-    
-    const char *pdfData = NULL;
-    int pdfDataLength = 0;
-    renderer->GetOutput(&pdfData, &pdfDataLength);
-    
-    NSData *data = [NSData dataWithBytes:pdfData length:pdfDataLength];
-    return data;
-}
+//- (NSData *)recognizedPDFForImages:(NSArray*)images {
+//
+//    if (!self.isEngineConfigured) {
+//        return nil;
+//    }
+//
+//    NSString *path = [self.absoluteDataPath stringByAppendingPathComponent:@"tessdata"];
+//    tesseract::TessPDFRenderer *renderer = new tesseract::TessPDFRenderer(path.fileSystemRepresentation);
+//
+//    // Begin producing output
+//    const char* kUnknownTitle = "Unknown Title";
+//    if (renderer && !renderer->BeginDocument(kUnknownTitle)) {
+//        return nil; // LCOV_EXCL_LINE
+//    }
+//
+//    bool result = YES;
+//    for (int page = 0; page < images.count && result; page++) {
+//        UIImage *image = images[page];
+//        if ([image isKindOfClass:[UIImage class]]) {
+//            Pix *pixs = [self pixForImage:image];
+//            Pix *pix = pixConvertTo1(pixs, UINT8_MAX / 2);
+//            pixDestroy(&pixs);
+//
+//            const char *pagename = [NSString stringWithFormat:@"page #%i", page].UTF8String;
+//            result = _tesseract->ProcessPage(pix, page, pagename, NULL, 0, renderer);
+//            pixDestroy(&pix);
+//        }
+//    }
+//
+//    //  error
+//    if (!result) {
+//        return nil; // LCOV_EXCL_LINE
+//    }
+//
+//    // Finish producing output
+//    if (renderer && !renderer->EndDocument()) {
+//        return nil; // LCOV_EXCL_LINE
+//    }
+//
+//    const char *pdfData = NULL;
+//    int pdfDataLength = 0;
+//    renderer->GetOutput(&pdfData, &pdfDataLength);
+//
+//    NSData *data = [NSData dataWithBytes:pdfData length:pdfDataLength];
+//    return data;
+//}
 
 - (UIImage *)imageWithBlocks:(NSArray *)blocks drawText:(BOOL)drawText thresholded:(BOOL)thresholded
 {
