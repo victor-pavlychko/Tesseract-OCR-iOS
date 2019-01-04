@@ -1,7 +1,7 @@
-LEPTON_NAME = leptonica-1.72
-PNG_NAME    = libpng-1.6.20
+LEPTON_NAME = leptonica-1.77.0
+PNG_NAME    = libpng-1.6.34
 JPEG_NAME   = jpeg-9a
-TIFF_NAME   = tiff-4.0.4
+TIFF_NAME   = tiff-4.0.9
 
 SDK_IPHONEOS_PATH=$(shell xcrun --sdk iphoneos --show-sdk-path)
 SDK_IPHONESIMULATOR_PATH=$(shell xcrun --sdk iphonesimulator --show-sdk-path)
@@ -90,11 +90,10 @@ $(TESSERACT_SRC)/%/Makefile : $(libtessconfig) $(libleptfat)
 	export CFLAGS="-I$(TESSERACT_SRC)/$*/ $(common_cflags) -fembed-bitcode" ; \
 	export CPPFLAGS=$$CFLAGS ; \
 	export CXXFLAGS="-I$(TESSERACT_SRC)/$*/ $(common_cflags) -Wno-deprecated-register"; \
-	export LDFLAGS="-L$$SDKROOT/usr/lib/ -L$(LEPTON_SRC)/$*/src/.libs" ; \
-	export LIBLEPT_HEADERSDIR=$(TESSERACT_SRC)/$*/ ; \
+	export LDFLAGS="-L$$SDKROOT/usr/lib/" ; \
+	export PKG_CONFIG_PATH="$(LEPTON_SRC)/$*/" ; \
 	mkdir -p $(@D) ; \
 	cd $(@D) ; \
-	ln -s $(LEPTON_SRC)/src/ leptonica ; \
 	../configure --host=$* --prefix=`pwd` --enable-shared=no --disable-graphics
 
 $(libtessconfig) : $(libtessautogen)
@@ -122,7 +121,7 @@ $(LEPTON_SRC)/%/Makefile : $(imagesfat) $(libleptconfig)
     export LDFLAGS="-L$$SDKROOT/usr/lib/ -L$(LIB_FAT_DIR)" ; \
 	mkdir -p $(@D) ; \
 	cd $(@D) ; \
-    ../configure --host=$* --prefix=`pwd` --enable-shared=no --disable-programs --with-zlib --with-libpng --with-jpeg --without-giflib --with-libtiff
+    ../configure --host=$* --prefix=`pwd` --enable-shared=no --disable-programs --with-zlib --with-libpng --with-jpeg --without-giflib --with-libtiff --without-libwebp --without-libopenjpeg
 
 #######################
 # Build libtiff and all of it's dependencies
@@ -146,8 +145,6 @@ $(imagesmakefile) $(libtessautogen) :
 
 $(libleptconfig) :
 	curl http://leptonica.org/source/$(LEPTON_NAME).tar.gz | tar -xpf-
-	cd $(LEPTON_NAME) ; \
-	patch -p1 < ../leptonica.patch
 
 #######################
 # Clean
