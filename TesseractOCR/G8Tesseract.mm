@@ -957,7 +957,7 @@ namespace tesseract {
     }
 
     if (self.maximumRecognitionTime > FLT_EPSILON) {
-        _monitor->set_deadline_msecs((inT32)(self.maximumRecognitionTime * 1000));
+        _monitor->set_deadline_msecs((int32_t)(self.maximumRecognitionTime * 1000));
     }
 
     self.recognized = NO;
